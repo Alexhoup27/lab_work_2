@@ -32,8 +32,8 @@ func arctg(x, eps float64) float64 {
 	}
 	result := new_x
 	k := 2
-	step := x
-	for step >= eps {
+	step := new_x
+	for math.Abs(step) >= eps {
 		step *= -1 * math.Pow(new_x, 2) * float64(2*k-3) / float64(2*k-1)
 		k++
 		result += step
