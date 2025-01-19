@@ -13,13 +13,16 @@ func go_f(x float64) float64 {
 	return math.Pow(float64(1)+(float64(2)/math.Pi)*math.Abs(math.Atan(x)), 0.5)
 }
 func my_f(x, eps float64) float64 {
-	x = (math.Abs(arctg(x, eps))) * 2 / math.Pi
+	x = (math.Abs(arctg(x, eps)) * 2) / math.Pi
 	result := float64(1)
 	k := 1
 	step := result
-	for step >= eps {
-		step *= -2 * float64(k) * x * (float64(3-2*k) / float64(4*math.Pow(float64(k), 2)*
-			float64(1-2*k)))
+	for math.Abs(step) >= eps {
+		// step *= -2 * float64(k) * x * (float64(3-2*k) / float64(4*math.Pow(float64(k), 2)*
+		// 	float64(1-2*k)))
+		step *= -1 * float64(x) *
+			(float64((2*k-1)*2*k*(1-2*(k-1))) /
+				float64(float64(1-2*k)*math.Pow(float64(k), 2)*4))
 		result += step
 		k++
 	}
@@ -50,7 +53,8 @@ func main() {
 	h := (b - a) / float64(m)
 	for i := 0; int64(i) <= m; i++ {
 		x := float64(a + float64(i)*h)
-		// fmt.Println(x, " ", my_f(x, eps), " ", go_f(x))
-		fmt.Println(x, arctg(x, eps), math.Atan(x))
+		// xx := arctg(x, eps) * float64(2) / math.Pi
+		fmt.Println(x, " ", my_f(x, eps), " ", go_f(x))
+		// fmt.Println(x, arctg(x, eps), math.Atan(x))
 	}
 }
